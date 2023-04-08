@@ -1,8 +1,13 @@
 import React from "react";
 import Hero from "../../components/Hero";
+import Container from "../../components/Container";
 
 const Brog = () => {
-  return <Hero title="Blog" subtitle="Recent Posts" />;
+  return (
+    <Container>
+      <Hero title="Blog" subtitle="Recent Posts" />
+    </Container>
+  );
 };
 
 export default Brog;
