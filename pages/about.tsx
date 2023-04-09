@@ -8,11 +8,27 @@ import {
   TwoColumnMain,
   TwoColumnSidebar,
 } from "../components/TwoColumn";
+import Image from "next/image";
+import eyecatch from "../images/about.jpg";
+import Head from "next/head";
+import Meta from "../components/Meta";
 
 const About = () => {
   return (
     <Container>
+      <Meta pageTitle="アバウト" />
       <Hero title="About" subtitle="About development activities" />
+
+      <figure>
+        <Image
+          src={eyecatch}
+          alt=""
+          sizes="(min-width:1152px) 1152px,100vw"
+          style={{ width: "100%", height: "auto" }}
+          priority
+          placeholder="blur"
+        />
+      </figure>
       <TwoColumn>
         <TwoColumnMain>
           <PostBody>

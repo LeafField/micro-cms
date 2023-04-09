@@ -51,6 +51,10 @@ span > img {
   transition: 0.2s;
 }
 
+figure > img {
+  transition: 0.2s;
+}
+
 /* リセット */
 body,
 h1,
