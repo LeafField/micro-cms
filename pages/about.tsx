@@ -10,7 +10,6 @@ import {
 } from "../components/TwoColumn";
 import Image from "next/image";
 import eyecatch from "../images/about.jpg";
-import Head from "next/head";
 import Meta from "../components/Meta";
 
 const About = () => {

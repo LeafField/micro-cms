@@ -2,8 +2,6 @@ import Head from "next/head";
 import React from "react";
 import { siteMeta } from "../lib/constant";
 import { useRouter } from "next/router";
-import favicon from "../images/favicon.ico";
-import test from "../public/favicon.ico";
 
 type Props = {
   pageTitle?: string;
