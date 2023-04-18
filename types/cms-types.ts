@@ -17,6 +17,11 @@ type Structure<T, P> = T extends "get"
   ? GetsType<{ id: string } & DateType & Required<P>>
   : Partial<DateType> & (T extends "patch" ? Partial<P> : P);
 
+export type GetAllSlug = {
+  title: blogs["title"];
+  slug: blogs["slug"];
+};
+
 export type categories<T = "get"> = Structure<
   T,
   {

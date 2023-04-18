@@ -1,6 +1,12 @@
-import { InferGetStaticPropsType, NextPage } from "next";
+import {
+  GetStaticPaths,
+  GetStaticPathsContext,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+  NextPage,
+} from "next";
 import Image from "next/image";
-import { getPostBySlug } from "../../lib/api";
+import { getAllSlug, getPostBySlug } from "../../lib/api";
 import Container from "../../components/Container";
 import PostHeader from "../../components/PostHeader";
 import { blogs } from "../../types/cms-types";
@@ -12,33 +18,52 @@ import {
 import PostBody from "../../components/PostBody";
 import ConvertBody from "../../components/ConvertBody";
 import PostCategories from "../../components/PostCategories";
+import Meta from "../../components/Meta";
+import { extractText } from "../../lib/extract";
+import { eyecatchLocal } from "../../lib/constant";
 
-export const getStaticProps = async () => {
-  const slug = "schedule";
+export const getStaticPaths: GetStaticPaths = async () => {
+  const slugs = await getAllSlug();
+  return {
+    paths: slugs.map(({ slug }) => `/blog/${slug}`),
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+  const slug = context.params!.slug;
+
+  if (!(typeof slug === "string")) return;
   const post: blogs = await getPostBySlug(slug);
+
+  const description = extractText(post.content);
+  const eyecatch = post.eyecatch ?? eyecatchLocal;
 
   return {
     props: {
       title: post.title,
       publish: post.publishDate,
       content: post.content,
-      eyecatch: post.eyecatch,
+      eyecatch: eyecatch,
       categories: post.categories,
+      description: description,
     },
   };
 };
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
-const schedule: NextPage<Props> = ({
+const post: NextPage<Props> = ({
   title,
   content,
   categories,
   eyecatch,
   publish,
+  description,
 }) => {
   return (
     <Container>
+      <Meta pageTitle={title} pageDesc={description} />
       <article>
         <PostHeader title={title} subtitle={"Blog Article"} publish={publish} />
         <figure>
@@ -71,4 +96,4 @@ const schedule: NextPage<Props> = ({
   );
 };
 
-export default schedule;
+export default post;
