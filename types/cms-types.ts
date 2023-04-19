@@ -22,6 +22,12 @@ export type GetAllSlug = {
   slug: blogs["slug"];
 };
 
+export type GetAllPosts = {
+  title: blogs["title"];
+  slug: blogs["slug"];
+  eyecatch: blogs["eyecatch"];
+};
+
 export type categories<T = "get"> = Structure<
   T,
   {
