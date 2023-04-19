@@ -21,6 +21,8 @@ import PostCategories from "../../components/PostCategories";
 import Meta from "../../components/Meta";
 import { extractText } from "../../lib/extract";
 import { eyecatchLocal } from "../../lib/constant";
+import { prevNextPost } from "../../lib/prevNextPost";
+import Pagination from "../../components/Pagination";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await getAllSlug();
@@ -38,6 +40,8 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   const description = extractText(post.content);
   const eyecatch = post.eyecatch ?? eyecatchLocal;
+  const AllSlugs = await getAllSlug();
+  const [prevPost, nextPost] = prevNextPost(AllSlugs, slug);
 
   return {
     props: {
@@ -47,6 +51,8 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       eyecatch: eyecatch,
       categories: post.categories,
       description: description,
+      prevPost,
+      nextPost,
     },
   };
 };
@@ -60,6 +66,8 @@ const post: NextPage<Props> = ({
   eyecatch,
   publish,
   description,
+  nextPost,
+  prevPost,
 }) => {
   return (
     <Container>
@@ -91,6 +99,13 @@ const post: NextPage<Props> = ({
             <PostCategories categories={categories} />
           </TwoColumnSidebar>
         </TwoColumn>
+
+        <Pagination
+          nextText={nextPost.title}
+          nextUrl={`/blog/${nextPost.slug}`}
+          prevText={prevPost.title}
+          prevUrl={`/blog/${prevPost.slug}`}
+        />
       </article>
     </Container>
   );
