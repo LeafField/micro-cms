@@ -6,7 +6,7 @@ import { GetAllPosts } from "../types/cms-types";
 import Image from "next/image";
 
 type Props = {
-  posts: GetAllPosts[];
+  posts: blogs[];
 };
 
 const Posts: React.FC<Props> = ({ posts }) => {
@@ -24,6 +24,8 @@ const Posts: React.FC<Props> = ({ posts }) => {
                 style={{
                   objectFit: "cover",
                 }}
+                sizes="(min-width:1152px) 576px,50vw"
+                priority
               />
             </figure>
             <h2>{title}</h2>

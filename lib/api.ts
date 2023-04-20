@@ -52,7 +52,7 @@ export const getAllSlug = async (limit = 100): Promise<GetAllSlug[]> => {
   }
 };
 
-export const getAllPosts = async (limit = 100): Promise<GetAllPosts[]> => {
+export const getAllPosts = async (limit = 100): Promise<blogs[]> => {
   try {
     const posts = await client.get<blogs<"gets">>({
       endpoint: "blogs",
@@ -75,6 +75,24 @@ export const getAllPosts = async (limit = 100): Promise<GetAllPosts[]> => {
           url: "エラー",
           width: 0,
         },
+        categories: [
+          {
+            createdAt: "",
+            id: "",
+            name: "",
+            publishedAt: "",
+            revisedAt: "",
+            slug: "",
+            updatedAt: "",
+          },
+        ],
+        content: "",
+        createdAt: "",
+        id: "",
+        publishDate: "",
+        publishedAt: "",
+        revisedAt: "",
+        updatedAt: "",
       },
     ];
   }
@@ -108,7 +126,7 @@ export const getAllCategoies = async (limit = 100): Promise<categories[]> => {
 };
 
 export const getAllPostsByCategory = async (
-  catID: string,
+  catID: categories["id"],
   limit = 100
 ): Promise<blogs[]> => {
   try {
