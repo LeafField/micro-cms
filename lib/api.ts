@@ -1,5 +1,5 @@
 import { createClient } from "microcms-js-sdk";
-import { GetAllPosts, GetAllSlug, categories } from "../types/cms-types";
+import { GetAllSlug, categories } from "../types/cms-types";
 import { blogs } from "../types/cms-types";
 
 export const client = createClient({
@@ -15,25 +15,12 @@ export const getPostBySlug = async (slug: string): Promise<blogs> => {
     });
     return post.contents[0];
   } catch (err) {
-    console.log("--getPostBySlug");
     console.log(err);
-    return {
-      id: "",
-      title: "",
-      slug: "",
-      publishDate: "",
-      content: "",
-      categories: [],
-      eyecatch: { url: "", width: 0, height: 0 },
-      createdAt: "",
-      updatedAt: "",
-      publishedAt: "",
-      revisedAt: "",
-    };
+    throw new Error("--getPostBySlug--");
   }
 };
 
-export const getAllSlug = async (limit = 100): Promise<GetAllSlug[]> => {
+export const getAllSlug = async (limit = 100): Promise<blogs[]> => {
   try {
     const slug = await client.get<blogs<"gets">>({
       endpoint: "blogs",
@@ -41,14 +28,8 @@ export const getAllSlug = async (limit = 100): Promise<GetAllSlug[]> => {
     });
     return slug.contents;
   } catch (err) {
-    console.log("--getAllSlugs--");
     console.log(err);
-    return [
-      {
-        title: "エラー",
-        slug: "エラー",
-      },
-    ];
+    throw new Error("--getAllSlugs--");
   }
 };
 
@@ -64,37 +45,8 @@ export const getAllPosts = async (limit = 100): Promise<blogs[]> => {
     });
     return posts.contents;
   } catch (err) {
-    console.log("--getAllPosts--");
     console.log(err);
-    return [
-      {
-        title: "エラー",
-        slug: "error",
-        eyecatch: {
-          height: 0,
-          url: "エラー",
-          width: 0,
-        },
-        categories: [
-          {
-            createdAt: "",
-            id: "",
-            name: "",
-            publishedAt: "",
-            revisedAt: "",
-            slug: "",
-            updatedAt: "",
-          },
-        ],
-        content: "",
-        createdAt: "",
-        id: "",
-        publishDate: "",
-        publishedAt: "",
-        revisedAt: "",
-        updatedAt: "",
-      },
-    ];
+    throw new Error("--getAllPosts--");
   }
 };
 
@@ -111,17 +63,7 @@ export const getAllCategoies = async (limit = 100): Promise<categories[]> => {
   } catch (err) {
     console.log("--getAllCategories--");
     console.log(err);
-    return [
-      {
-        name: "",
-        id: "",
-        slug: "",
-        createdAt: "",
-        publishedAt: "",
-        revisedAt: "",
-        updatedAt: "",
-      },
-    ];
+    throw new Error("--getAllCategories--");
   }
 };
 
@@ -141,36 +83,7 @@ export const getAllPostsByCategory = async (
     });
     return posts.contents;
   } catch (err) {
-    console.log("--getAllPostsByCategory--");
     console.log(err);
-    return [
-      {
-        title: "",
-        id: "",
-        slug: "",
-        revisedAt: "",
-        eyecatch: {
-          height: 0,
-          width: 0,
-          url: "",
-        },
-        categories: [
-          {
-            name: "",
-            id: "",
-            updatedAt: "",
-            createdAt: "",
-            publishedAt: "",
-            revisedAt: "",
-            slug: "",
-          },
-        ],
-        createdAt: "",
-        publishDate: "",
-        publishedAt: "",
-        updatedAt: "",
-        content: "",
-      },
-    ];
+    throw new Error("--getAllPostsByCategory--");
   }
 };
